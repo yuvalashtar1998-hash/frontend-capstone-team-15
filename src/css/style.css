@@ -1,0 +1,49 @@
+body {
+font-family: Arial, Helvetica, sans-serif;
+margin: 0;
+}
+.wrapper {
+max-width: 1000px;
+margin: 0 auto;
+padding: 16px;
+}
+.site-headedr{
+    border-bottom: 1px
+    solid #ddd;
+}
+.header-content{
+    display: flex; 
+    gap: 16px;
+    align-items: center;
+    padding: 12px;
+}
+.site-title{
+    font-weight: 700;
+    font-size: 18px;
+}
+
+main-nav a {
+    margin-right: 10px;
+    text-decoration: none;
+}
+.main-nav a:hover { 
+    text-decoration: underline;
+}
+
+.hard-worker {
+    padding: 18px;
+}
+.grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(3,1fr);
+}
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+}
+.list{
+    padding-left: 18px;
+    margin: 0;
+}
