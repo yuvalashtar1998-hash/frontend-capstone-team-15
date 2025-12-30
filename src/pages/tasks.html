@@ -20,8 +20,44 @@
         </div>
     </header>
     <main class="wrapper">
-        <h1>Tasks</h1>
-        <p>This page will include the weekly tasks</p>
+        <section class="hard-worker">
+            <h1>Tasks</h1>
+            <p>Manage your study tasks and stay organized</p>
+        </section>
+        
+        <section class="tasks-layout">
+            <div class="tasts-list">
+                <h2>Your Tasks</h2>
+                <p class="muted">No tasks yet, Add a new task now!</p>
+            </div>
+            <div class="add-task">
+                <h2>Add New Task</h2>
+                <form>
+                    <label>
+                        Task name
+                        <input type="text" placeholder="Study for exam">
+                    </label>
+                    <label>
+                        Day
+                        <select>
+                            <option>Sunday</option>
+                            <option>Monday</option>
+                            <option>Tuesday</option>
+                            <option>Wendnesday</option>
+                            <option>Thursday</option>
+                            <option>Friday</option>
+                            <option>Saturday</option>
+                        </select>
+                    </label>
+                    <button type="button">Add Task</button>
+                </form>
+            </div>
+        </section>
     </main>
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Study Planner</p>
+        </div>
+    </footer>
 </body>
 </html>
