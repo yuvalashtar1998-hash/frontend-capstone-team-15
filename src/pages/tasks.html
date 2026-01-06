@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Planner - Tasks</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/app.js" defer></script>
 </head>
 <body>
     <header class="site-header">
@@ -26,30 +27,31 @@
         </section>
         
         <section class="tasks-layout">
-            <div class="tasts-list">
+            <div class="tasks-list">
                 <h2>Your Tasks</h2>
-                <p class="muted">No tasks yet, Add a new task now!</p>
+                <ul id="tasksList" class="list"></ul>
+                <p id="tasksEmpty" class="muted">No tasks yet. Task you add will appear here</p>
             </div>
             <div class="add-task">
                 <h2>Add New Task</h2>
-                <form>
+                <form id="taskForm">
                     <label>
                         Task name
-                        <input type="text" placeholder="Study for exam">
+                        <input id="taskName" type="text" placeholder="Study for exam">
                     </label>
                     <label>
                         Day
-                        <select>
+                        <select id="taskDay">
                             <option>Sunday</option>
                             <option>Monday</option>
                             <option>Tuesday</option>
-                            <option>Wendnesday</option>
+                            <option>Wednesday</option>
                             <option>Thursday</option>
                             <option>Friday</option>
                             <option>Saturday</option>
                         </select>
                     </label>
-                    <button type="button">Add Task</button>
+                    <button id="addTaskBtn" type="submit">Add Task</button>
                 </form>
             </div>
         </section>

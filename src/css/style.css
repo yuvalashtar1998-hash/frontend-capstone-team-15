@@ -127,3 +127,10 @@ main-nav a {
 .inline-link a {
     font-size: 14px;
 }
+.day-card {
+  border: 1px solid #ddd;
+}
+
+.day-card.drag-over {
+  background-color: #f0f4ff;
+}
