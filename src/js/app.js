@@ -4,6 +4,8 @@ const nameInput = document.getElementById("taskName");
 const daySelect = document.getElementById("taskDay");
 const list = document.getElementById("tasksList");
 const emptyMsg = document.getElementById("tasksEmpty");
+const courseInput = document.getElementById("taskCourse");
+const filterCourse = document.getElementById("filterCourse");
 
 const dayCards = document.querySelectorAll(".day-card[data-day]");
 
@@ -40,21 +42,31 @@ function renderTasks() {
 
   list.innerHTML = "";
 
-  if (tasks.length === 0) {
+    // --- Filter tasks by course (if user chose a course) ---
+  let visibleTasks = tasks;
+
+  if (filterCourse && filterCourse.value !== "all") {
+    visibleTasks = tasks.filter(t => (t.course || "").trim() === filterCourse.value);
+  }
+
+  if (visibleTasks.length === 0) {
     if (emptyMsg) emptyMsg.style.display = "block";
     return;
   }
 
+
   if (emptyMsg) emptyMsg.style.display = "none";
 
- tasks.forEach((task) => {
+ visibleTasks.forEach((task) => {
   const li = document.createElement("li");
 
   // אם זו משימה ישנה בלי completed, נתייחס אליה כ-false
   if (typeof task.completed !== "boolean") task.completed = false;
 
   const span = document.createElement("span");
-  span.textContent = `${task.name} (${task.day})`;
+  const courseLabel = (task.course && task.course.trim()) ? task.course.trim() : "No course";
+  span.textContent = `${task.name} | ${courseLabel} | ${task.day}`;
+
 
   // אם בוצע - לתת קלאס של קו
   if (task.completed) {
@@ -148,18 +160,54 @@ function setupPlannerDropZones() {
   });
 }
 
+function updateCourseFilterOptions() {
+  if (!filterCourse) return;
+
+  const current = filterCourse.value || "all";
+
+  // קורסים ייחודיים מתוך המשימות (מתעלמים מריק)
+  const uniqueCourses = Array.from(
+    new Set(
+      tasks
+        .map(t => (t.course || "").trim())
+        .filter(c => c.length > 0)
+    )
+  ).sort((a, b) => a.localeCompare(b));
+
+  filterCourse.innerHTML = "";
+  const optAll = document.createElement("option");
+  optAll.value = "all";
+  optAll.textContent = "All";
+  filterCourse.appendChild(optAll);
+
+  uniqueCourses.forEach((c) => {
+    const opt = document.createElement("option");
+    opt.value = c;
+    opt.textContent = c;
+    filterCourse.appendChild(opt);
+  });
+
+  // לשמור בחירה אם אפשר
+  const stillExists = Array.from(filterCourse.options).some(o => o.value === current);
+  filterCourse.value = stillExists ? current : "all";
+}
+
+
 // --------- Add ----------
-function addTask(name, day) {
+function addTask(name, day, course) {
   tasks.push({
     id: Date.now(),
     name: name,
     day: day,
+    course: course,
     completed: false
   });
 
   saveTasks();
+  updateCourseFilterOptions();
   renderTasks();
   renderPlanner();
+
 }
 
 // --------- Delete ----------
@@ -202,15 +250,27 @@ if (form) {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    addTask(nameInput.value, daySelect.value);
+    addTask(
+      nameInput.value.trim(),
+      daySelect.value,
+      (courseInput?.value || "").trim()
+    );
 
     nameInput.value = "";
+    if (courseInput) courseInput.value = "";
     nameInput.focus();
+  });
+}
+
+if (filterCourse) {
+  filterCourse.addEventListener("change", () => {
+    renderTasks();
   });
 }
 
 // Initial render
 loadTasks();
+updateCourseFilterOptions();
 renderTasks();
 renderPlanner();
 setupPlannerDropZones();
