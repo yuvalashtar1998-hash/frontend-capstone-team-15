@@ -15,16 +15,15 @@ body{
   border-bottom: 1px solid #e2e8f0;
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
 }
-
-.site-header .wrapper{
+.site-header .header-content{
+  max-width: 1000px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding-top: 14px;
-  padding-bottom: 14px;
+  padding: 14px 16px;
 }
-
 .header-content{
     display: flex; 
     gap: 16px;
@@ -36,6 +35,12 @@ body{
   font-weight: 700;
   color: #0f172a;
   letter-spacing: 0.3px;
+}
+
+.main-nav{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .main-nav a{
@@ -51,6 +56,13 @@ body{
   transition: background 0.2s ease, transform 0.2s ease;
  /* (כמה זמן שהמעבר יקח מבחינת שניות ,העברה בהדרגתיות ובחלקות) */
 }
+
+.main-nav a.active{
+  background-color: #ffffff;
+  color: #222;
+  font-weight: bold;
+}
+
 .hard-worker h1{
     margin: 0 0 8px 0;
     font-size: 30px;
@@ -74,7 +86,7 @@ body{
     ),
     url("../images/book4.jpg");
 
-  background-size: cover;
+    background-size: cover;
   background-position: center 40%;
   border: 1px solid #dbeafe;
   border-radius: 18px;
@@ -154,6 +166,7 @@ body{
   background: #dbeafe;
   transform: translateY(-1px);
 }
+
 .card .btn-link{
   margin-top: auto;
 }
@@ -239,10 +252,58 @@ body{
 .inline-link a {
     font-size: 14px;
 }
-.day-card {
-  border: 1px solid #ddd;
-}
 
 .day-card.drag-over {
   background-color: #f0f4ff;
 }
+
+.stats-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 18px 0 22px;
+}
+
+.stat-card{
+  background-color: #f9fbff;
+  border: 1px solid #e6edf7;
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+
+.stat-num{
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.stat-label{
+  font-size: 14px;
+  color: #64748b;
+}
+
+.task-done{
+  text-decoration: line-through;
+  opacity: 0.65;
+}
+
+.task-actions{
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.btn-small{
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid #cfe0f7;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.btn-danger{
+  border-color: #f1b5b5;
+}
+
+

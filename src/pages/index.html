@@ -11,7 +11,7 @@
         <div class="header-content">
             <span class="site-title">Study Planner</span>
             <nav class="main-nav">
-                <a href="index.html">Home</a>
+                <a href="index.html" class="active">Home</a>
                 <a href="planner.html">Planner</a>
                 <a href="tasks.html">Tasks</a>
                 <a href="about.html">About</a>
@@ -22,6 +22,28 @@
         <section class="hard-worker">
             <h1>Plan your week - Stay on track!</h1>
             <p>All your courses and tasks in one place</p>
+        </section>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-num" id="statToday">0</div>
+                <div class="stat-label">Today</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-num" id="statPending">0</div>
+                <div class="stat-label">Tasks</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-num" id="statCompleted">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-num" id="statTotal">0</div>
+                <div class="stat-label">Total</div>
+            </div>
         </section>
 
         <section class="grid">
@@ -35,14 +57,14 @@
             </div>
 
             <div class="card">
-                <h2>Current Courses</h2>
-                <p class="muted">No courses yet. Add your first course to start planning</p>
+                <h2>Plan Your Sessions</h2>
+                <p class="muted">Schedule your time and stay organized throughout the week</p>
                 <a class="btn-link" href="planner.html">Open Planner</a>
             </div>
 
             <div class="card">
                 <h2>Today's Tasks</h2>
-                <p class="muted">No Tasks yet. Add your first task to start planning</p>
+                <p class="muted">Track your assignments and never miss a deadline again</p>
                 <a class="btn-link" href="tasks.html">Add New Task</a>
             </div>
         </section>
@@ -52,5 +74,6 @@
             <p>&copy; 2025 Study Planner</p>
         </div>
     </footer>
+    <script src="../js/app.js"></script>
 </body>
 </html>

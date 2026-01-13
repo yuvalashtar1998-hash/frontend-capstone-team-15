@@ -15,7 +15,7 @@
             <nav class="main-nav">
                 <a href="index.html">Home</a>
                 <a href="planner.html">Planner</a>
-                <a href="tasks.html">Tasks</a>
+                <a href="tasks.html" class="active">Tasks</a>
                 <a href="about.html">About</a>
             </nav>
         </div>
@@ -29,6 +29,13 @@
         <section class="tasks-layout">
             <div class="tasks-list">
                 <h2>Your Tasks</h2>
+                <label>
+                    View tasks by course
+                    <select id="filterCourse">
+                        <option value="all">All</option>
+                     </select>
+                    </label>
+
                 <ul id="tasksList" class="list"></ul>
                 <p id="tasksEmpty" class="muted">No tasks yet. Task you add will appear here</p>
             </div>
@@ -51,6 +58,11 @@
                             <option>Saturday</option>
                         </select>
                     </label>
+                    <label>
+                        Course name
+                        <input id="taskCourse" type="text" placeholder="Math">
+                    </label>
+
                     <button id="addTaskBtn" type="submit">Add Task</button>
                 </form>
             </div>
