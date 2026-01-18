@@ -106,7 +106,7 @@ function renderPlanner() {
   dayCards.forEach((card) => {
     const day = card.getAttribute("data-day");
     const ul = card.querySelector(".day-tasks");
-    const empty = card.querySelector(".muted");
+    const empty = card.querySelector(".no-tasks");
 
     if (!ul) return;
 
@@ -118,22 +118,19 @@ function renderPlanner() {
       if (empty) empty.style.display = "block";
       return;
     }
-
+// כשיש משימות
     if (empty) empty.style.display = "none";
 
     dayTasks.forEach((t) => {
-        const li = document.createElement("li");
-        li.textContent = t.name;
-        //הופך משימה לגרירה
-        li.draggable = true;
-        //זיהוי יחודי למשימה
-        li.dataset.id = t.id;
-        //מופעל בעת גרירת אלמנט
-        li.addEventListener("dragstart", (e) => {
-            e.dataTransfer.effectAllowed = "move";
-            e.dataTransfer.setData("text/plain", String(t.id));
-        });
-        ul.appendChild(li);
+      const li = document.createElement("li");
+      li.textContent = t.name;
+      li.draggable = true;
+      li.dataset.id = t.id;
+      li.addEventListener("dragstart", (e) => {
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", String(t.id));
+      });
+      ul.appendChild(li);
     });
   });
 }
@@ -159,6 +156,33 @@ function setupPlannerDropZones() {
     });
   });
 }
+
+function renderWeekDates() {
+  if (!dayCards || dayCards.length === 0) return;
+  const today = new Date();
+  const startOfWeek = new Date(today);
+  startOfWeek.setHours(0, 0, 0, 0);
+  startOfWeek.setDate(today.getDate() - today.getDay()); // Sunday
+
+  const dayOrder = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+  dayCards.forEach((card) => {
+    const dayName = card.getAttribute("data-day");
+    const dateEl = card.querySelector(".day-date");
+    if (!dateEl) return;
+
+    const idx = dayOrder.indexOf(dayName);
+    if (idx === -1) return;
+
+    const d = new Date(startOfWeek);
+    d.setDate(startOfWeek.getDate() + idx);
+
+    // פורמט תאריך נוח
+    const formatted = d.toLocaleDateString("he-IL");
+    dateEl.textContent = formatted;
+  });
+}
+
 
 function updateCourseFilterOptions() {
   if (!filterCourse) return;
@@ -203,11 +227,10 @@ function addTask(name, day, course) {
     completed: false
   });
 
-  saveTasks();
-  updateCourseFilterOptions();
-  renderTasks();
-  renderPlanner();
-
+saveTasks();
+updateCourseFilterOptions();
+renderTasks();
+renderPlanner();
 }
 
 // --------- Delete ----------
@@ -274,6 +297,7 @@ updateCourseFilterOptions();
 renderTasks();
 renderPlanner();
 setupPlannerDropZones();
+renderWeekDates();
 
 //  Home stats 
 function getTodayDayName() {
