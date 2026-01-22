@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Planner - Tasks</title>
     <link rel="stylesheet" href="../css/style.css">
-    <script src="../js/app.js" defer></script>
 </head>
 <body>
     <header class="site-header">
@@ -13,6 +12,10 @@
             <span class="site-title">Study Planner</span>
 
             <nav class="main-nav">
+                <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+                     ☰ Menu
+                    </button>
+
                 <a href="index.html">Home</a>
                 <a href="planner.html">Planner</a>
                 <a href="tasks.html" class="active">Tasks</a>
@@ -73,5 +76,7 @@
             <p>&copy; 2025 Study Planner</p>
         </div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../js/app.js" defer></script>
 </body>
 </html>

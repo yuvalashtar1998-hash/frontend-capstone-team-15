@@ -54,49 +54,40 @@ function renderTasks() {
     return;
   }
 
-
   if (emptyMsg) emptyMsg.style.display = "none";
-
- visibleTasks.forEach((task) => {
-  const li = document.createElement("li");
-
+  //----שימוש בJQUERY על DOM מתקדם---
+  visibleTasks.forEach((task) => {
   // אם זו משימה ישנה בלי completed, נתייחס אליה כ-false
   if (typeof task.completed !== "boolean") task.completed = false;
 
-  const span = document.createElement("span");
   const courseLabel = (task.course && task.course.trim()) ? task.course.trim() : "No course";
-  span.textContent = `${task.name} | ${courseLabel} | ${task.day}`;
 
+  // --- jQuery DOM build (בקטנה, בלי לשנות לוגיקה) ---
+  const $li = $("<li>");
 
-  // אם בוצע - לתת קלאס של קו
-  if (task.completed) {
-    span.classList.add("task-done");
-  }
+  const $span = $("<span>").text(`${task.name} | ${courseLabel} | ${task.day}`);
+  if (task.completed) $span.addClass("task-done");
 
-  // קופסה לכפתורים (Done + Delete)
-  const actions = document.createElement("div");
-  actions.className = "task-actions";
+  const $actions = $("<div>").addClass("task-actions");
 
-  // כפתור Done/Undo
-  const doneBtn = document.createElement("button");
-  doneBtn.type = "button";
-  doneBtn.className = "btn-small";
-  doneBtn.textContent = task.completed ? "Undo" : "Done";
-  doneBtn.addEventListener("click", () => toggleTaskCompleted(task.id));
+  const $doneBtn = $("<button>")
+  .attr("type", "button")
+  .attr("aria-label", task.completed ? `Undo task: ${task.name}` : `Mark as done: ${task.name}`)
+  .addClass("btn-small")
+  .text(task.completed ? "Undo" : "Done")
+  .on("click", () => toggleTaskCompleted(task.id));
 
-  // כפתור Delete
-  const delBtn = document.createElement("button");
-  delBtn.type = "button";
-  delBtn.className = "btn-small btn-danger";
-  delBtn.textContent = "Delete";
-  delBtn.addEventListener("click", () => deleteTask(task.id));
+  const $delBtn = $("<button>")
+  .attr("type", "button")
+  .attr("aria-label", `Delete task: ${task.name}`)
+  .addClass("btn-small btn-danger")
+  .text("Delete")
+  .on("click", () => deleteTask(task.id));
 
-  actions.appendChild(doneBtn);
-  actions.appendChild(delBtn);
+  $actions.append($doneBtn, $delBtn);
+  $li.append($span, $actions);
 
-  li.appendChild(span);
-  li.appendChild(actions);
-  list.appendChild(li);
+  $("#tasksList").append($li);
 });
 }
 
@@ -110,27 +101,58 @@ function renderPlanner() {
 
     if (!ul) return;
 
-    ul.innerHTML = "";
+// ניקוי הרשימה (jQuery)
+$(ul).empty();
 
-    const dayTasks = tasks.filter((t) => t.day === day);
+const dayTasks = tasks.filter((t) => t.day === day);
 
-    if (dayTasks.length === 0) {
-      if (empty) empty.style.display = "block";
-      return;
-    }
+if (dayTasks.length === 0) {
+  if (empty) empty.style.display = "block";
+  return;
+}
+
 // כשיש משימות
-    if (empty) empty.style.display = "none";
+if (empty) empty.style.display = "none";
 
-    dayTasks.forEach((t) => {
-      const li = document.createElement("li");
-      li.textContent = t.name;
-      li.draggable = true;
-      li.dataset.id = t.id;
-      li.addEventListener("dragstart", (e) => {
-        e.dataTransfer.effectAllowed = "move";
-        e.dataTransfer.setData("text/plain", String(t.id));
-      });
-      ul.appendChild(li);
+dayTasks.forEach((t) => {
+  const $li = $("<li>").text(t.name);
+
+  $li.attr("draggable", "true");
+  $li.attr("data-id", t.id);
+  $li.on("dragstart", (e) => {
+    const ev = e.originalEvent;
+    ev.dataTransfer.effectAllowed = "move";
+    ev.dataTransfer.setData("text/plain", String(t.id));
+  });
+  $(ul).append($li);
+});
+});
+}
+
+//גישה לפעולות מקלדת לPLANNER:
+function setupPlannerKeyboardAccessibility() {
+  if (!dayCards || dayCards.length === 0) return;
+
+  dayCards.forEach((card) => {
+    const day = card.getAttribute("data-day") || "Day";
+
+    // מאפשר להגיע עם TAB
+    card.setAttribute("tabindex", "0");
+
+    // תיאור לקורא מסך
+    card.setAttribute("role", "region");
+    card.setAttribute("aria-label", `Planner day: ${day}`);
+
+    // פידבק ויזואלי (כמו hover)
+    card.addEventListener("focus", () => card.classList.add("drag-over"));
+    card.addEventListener("blur", () => card.classList.remove("drag-over"));
+
+    // Enter/Space = “הדגשה” בלבד
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        card.classList.toggle("drag-over");
+      }
     });
   });
 }
@@ -298,6 +320,7 @@ renderTasks();
 renderPlanner();
 setupPlannerDropZones();
 renderWeekDates();
+setupPlannerKeyboardAccessibility();
 
 //  Home stats 
 function getTodayDayName() {
@@ -342,9 +365,15 @@ function updateHomeStats() {
 
 }
 
-// להריץ פעם אחת בטעינת העמוד
 updateHomeStats();
 
+// ===== Mobile Hamburger Menu =====
+const navToggle = document.querySelector(".nav-toggle");
+const mainNav = document.querySelector(".main-nav");
 
-
-
+if (navToggle && mainNav){
+  navToggle.addEventListener("click", () => {
+    const isOpen = mainNav.classList.toggle("open");
+    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  });
+}

@@ -51,6 +51,18 @@ a:hover{
   gap: 8px;
 }
 
+/* Hamburger button (hidden on desktop) */
+.nav-toggle{
+  display: none;
+  border: 1px solid #C4B5A6;
+  background: #E1D9D0;
+  color: #4A525B;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 .main-nav a{
   text-decoration: none;
   color: #4A525B;
@@ -526,6 +538,25 @@ a:hover{
     grid-template-columns: 1fr;
   }
 
+  /* === Mobile Navigation === */
+.main-nav{
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.main-nav a{
+  display: none;
+}
+
+.nav-toggle{
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.main-nav.open a{
+  display: block;
+}
   .btn-link,
   .main-nav a,
   .add-task button,
