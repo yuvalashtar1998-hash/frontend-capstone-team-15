@@ -492,6 +492,21 @@ a:hover{
   line-height: 1.5;
 }
 
+footer {
+  text-align: center;
+  padding: 20px 10px;
+}
+
+.footer-quote {
+  font-size: 14px;
+  color: #8a8178;
+  margin-bottom: 6px;
+}
+
+.footer-copy {
+  font-size: 14px;
+}
+
 /* =========================
    Responsive (Mobile/Tablet)
    ========================= */
@@ -557,12 +572,15 @@ a:hover{
 .main-nav.open a{
   display: block;
 }
-  .btn-link,
-  .main-nav a,
-  .add-task button,
-  .btn-small{
-    width: 100%;
-    text-align: center;
+
+.btn-link,
+.add-task button,
+.btn-small{
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  text-align: center;
+  box-sizing: border-box;
   }
 
   .add-task form{
@@ -575,5 +593,3 @@ a:hover{
     justify-self: stretch;
   }
 }
-
-
