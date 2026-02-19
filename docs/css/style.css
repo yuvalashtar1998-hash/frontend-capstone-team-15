@@ -125,7 +125,7 @@ a:hover{
 .grid{
     display: grid;
     gap: 16px;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .card{
@@ -140,6 +140,8 @@ a:hover{
   gap: 14px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   position: relative;
+  align-items: center;
+  text-align: center;
 }
 
 .card h2{
@@ -173,6 +175,7 @@ a:hover{
 
 .btn-link{
   display: inline-block;
+  width: fit-content;
   margin-top: 12px;
   padding: 8px 14px;
   background: #E1D9D0;
@@ -181,6 +184,7 @@ a:hover{
   border-radius: 12px;
   text-decoration: none;
   font-size: 14px;
+  font-weight: 600;
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
@@ -192,6 +196,7 @@ a:hover{
 
 .card .btn-link{
   margin-top: auto;
+  align-self: center;
 }
 
 .site-footer{
